@@ -4,12 +4,18 @@ import { Feather } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
 import { Platform, StyleSheet } from "react-native";
 import HomeStackNavigator from "@/navigation/HomeStackNavigator";
-import ProfileStackNavigator from "@/navigation/ProfileStackNavigator";
 import { useTheme } from "@/hooks/useTheme";
+import StoriesScreen from "@/screens/StoriesScreen";
+import OpportunitiesScreen from "@/screens/OpportunitiesScreen";
+import WatchScreen from "@/screens/WatchScreen";
+import CultureScreen from "@/screens/CultureScreen";
 
 export type MainTabParamList = {
   HomeTab: undefined;
-  ProfileTab: undefined;
+  StoriesTab: undefined;
+  OpportunitiesTab: undefined;
+  WatchTab: undefined;
+  CultureTab: undefined;
 };
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
@@ -54,12 +60,42 @@ export default function MainTabNavigator() {
         }}
       />
       <Tab.Screen
-        name="ProfileTab"
-        component={ProfileStackNavigator}
+        name="StoriesTab"
+        component={StoriesScreen}
         options={{
-          title: "Profile",
+          title: "Stories",
           tabBarIcon: ({ color, size }) => (
-            <Feather name="user" size={size} color={color} />
+            <Feather name="book-open" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="OpportunitiesTab"
+        component={OpportunitiesScreen}
+        options={{
+          title: "Opps",
+          tabBarIcon: ({ color, size }) => (
+            <Feather name="briefcase" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="WatchTab"
+        component={WatchScreen}
+        options={{
+          title: "Watch",
+          tabBarIcon: ({ color, size }) => (
+            <Feather name="play" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="CultureTab"
+        component={CultureScreen}
+        options={{
+          title: "Culture",
+          tabBarIcon: ({ color, size }) => (
+            <Feather name="map" size={size} color={color} />
           ),
         }}
       />
