@@ -80,6 +80,12 @@ export function VideoCard({ video, onPress }: VideoCardProps) {
         >
           {video.description}
         </ThemedText>
+        <View style={styles.sourceFooter}>
+          <Image source={{ uri: video.srcFavIcon }} style={styles.sourceFavIcon} />
+          <ThemedText type="small" style={{ color: colors.textSecondary, fontSize: 10 }}>
+            {video.source}
+          </ThemedText>
+        </View>
       </View>
     </AnimatedPressable>
   );
@@ -137,5 +143,17 @@ const styles = StyleSheet.create({
   },
   description: {
     marginTop: Spacing.sm,
+    marginBottom: Spacing.md,
+  },
+  sourceFooter: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'flex-end',
+  },
+  sourceFavIcon: {
+    width: 14,
+    height: 14,
+    marginRight: 4,
+    borderRadius: 2,
   },
 });

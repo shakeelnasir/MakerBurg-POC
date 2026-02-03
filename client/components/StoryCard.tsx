@@ -38,6 +38,15 @@ export function StoryCard({ story, onPress, variant = "default" }: StoryCardProp
     scale.value = withSpring(1, { damping: 15, stiffness: 150 });
   };
 
+  const SourceBadge = () => (
+    <View style={styles.sourceContainer}>
+      <Image source={{ uri: story.srcFavIcon }} style={styles.sourceFavIcon} />
+      <ThemedText type="small" style={{ color: colors.textSecondary, fontSize: 10 }}>
+        {story.source}
+      </ThemedText>
+    </View>
+  );
+
   if (variant === "hero") {
     return (
       <AnimatedPressable
@@ -63,36 +72,9 @@ export function StoryCard({ story, onPress, variant = "default" }: StoryCardProp
           <ThemedText type="body" style={styles.heroSubtitle}>
             {story.subtitle}
           </ThemedText>
-        </View>
-      </AnimatedPressable>
-    );
-  }
-
-  if (variant === "compact") {
-    return (
-      <AnimatedPressable
-        onPress={onPress}
-        onPressIn={handlePressIn}
-        onPressOut={handlePressOut}
-        style={[
-          styles.compactContainer,
-          { backgroundColor: theme.backgroundDefault },
-          animatedStyle,
-        ]}
-      >
-        <Image
-          source={{ uri: story.hero }}
-          style={styles.compactImage}
-          contentFit="cover"
-          transition={300}
-        />
-        <View style={styles.compactContent}>
-          <ThemedText type="small" style={{ color: colors.textSecondary }}>
-            {story.region}
-          </ThemedText>
-          <ThemedText type="h4" numberOfLines={2}>
-            {story.title}
-          </ThemedText>
+          <View style={styles.heroSourceBadge}>
+            <SourceBadge />
+          </View>
         </View>
       </AnimatedPressable>
     );
@@ -130,12 +112,15 @@ export function StoryCard({ story, onPress, variant = "default" }: StoryCardProp
         >
           {story.subtitle}
         </ThemedText>
-        <ThemedText
-          type="caption"
-          style={[styles.readTime, { color: colors.textSecondary }]}
-        >
-          {story.readTime}
-        </ThemedText>
+        <View style={styles.cardFooter}>
+          <ThemedText
+            type="caption"
+            style={[styles.readTime, { color: colors.textSecondary }]}
+          >
+            {story.readTime}
+          </ThemedText>
+          <SourceBadge />
+        </View>
       </View>
     </AnimatedPressable>
   );
@@ -164,7 +149,23 @@ const styles = StyleSheet.create({
   subtitle: {
     marginBottom: Spacing.sm,
   },
+  cardFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: Spacing.xs,
+  },
   readTime: {},
+  sourceContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  sourceFavIcon: {
+    width: 14,
+    height: 14,
+    marginRight: 4,
+    borderRadius: 2,
+  },
   heroContainer: {
     borderRadius: BorderRadius.lg,
     overflow: "hidden",
@@ -190,18 +191,13 @@ const styles = StyleSheet.create({
   },
   heroSubtitle: {
     color: "rgba(255,255,255,0.85)",
+    marginBottom: Spacing.sm,
   },
-  compactContainer: {
-    width: 200,
-    borderRadius: BorderRadius.md,
-    overflow: "hidden",
-    marginRight: Spacing.md,
-  },
-  compactImage: {
-    width: "100%",
-    height: 130,
-  },
-  compactContent: {
-    padding: Spacing.md,
+  heroSourceBadge: {
+    alignSelf: 'flex-end',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
   },
 });

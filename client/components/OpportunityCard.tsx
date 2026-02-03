@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Pressable, StyleSheet } from "react-native";
+import { Image } from "expo-image";
 import { Feather } from "@expo/vector-icons";
 import Animated, {
   useAnimatedStyle,
@@ -40,23 +41,6 @@ export function OpportunityCard({
 
   const handlePressOut = () => {
     scale.value = withSpring(1, { damping: 15, stiffness: 150 });
-  };
-
-  const getCategoryIcon = () => {
-    switch (opportunity.category) {
-      case "Grant":
-        return "award";
-      case "Residency":
-        return "home";
-      case "Open Call":
-        return "mic";
-      case "Scholarship":
-        return "book-open";
-      case "Fellowship":
-        return "users";
-      default:
-        return "star";
-    }
   };
 
   return (
@@ -109,7 +93,12 @@ export function OpportunityCard({
             {opportunity.region}
           </ThemedText>
         </View>
-        <Feather name="arrow-right" size={18} color={colors.textSecondary} />
+        <View style={styles.sourceContainer}>
+          <Image source={{ uri: opportunity.srcFavIcon }} style={styles.sourceFavIcon} />
+          <ThemedText type="small" style={{ color: colors.textSecondary, fontSize: 10 }}>
+            {opportunity.source}
+          </ThemedText>
+        </View>
       </View>
     </AnimatedPressable>
   );
@@ -151,5 +140,15 @@ const styles = StyleSheet.create({
   },
   regionText: {
     marginLeft: Spacing.xs,
+  },
+  sourceContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  sourceFavIcon: {
+    width: 14,
+    height: 14,
+    marginRight: 4,
+    borderRadius: 2,
   },
 });

@@ -1,20 +1,25 @@
 import React from "react";
 import { FlatList, View, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useTheme } from "@/hooks/useTheme";
 import { Spacing } from "@/constants/theme";
 import { StoryCard } from "@/components/StoryCard";
 import { OpportunityCard } from "@/components/OpportunityCard";
 import { VideoCard } from "@/components/VideoCard";
 import { CultureCard } from "@/components/CultureCard";
-import { ThemedText } from "@/components/ThemedText";
 import { HeaderTitle } from "@/components/HeaderTitle";
 import { SectionHeader } from "@/components/SectionHeader";
+import { RootStackParamList } from "@/navigation/RootStackNavigator";
 import { SAMPLE_STORIES, SAMPLE_OPPS, SAMPLE_VIDEOS, SAMPLE_CULTURE } from "@/data/sampleData";
+
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 export default function HomeScreen() {
   const insets = useSafeAreaInsets();
   const { theme } = useTheme();
+  const navigation = useNavigation<NavigationProp>();
 
   const sections = [
     { type: 'header', data: null },
@@ -25,6 +30,12 @@ export default function HomeScreen() {
     { type: 'section', title: "From the Culture Atlas", data: [SAMPLE_CULTURE[0]] },
   ];
 
+  const handlePress = (item: any) => {
+    if (item.srcLink) {
+      navigation.navigate("WebView", { url: item.srcLink, title: item.title });
+    }
+  };
+
   const renderItem = ({ item }: { item: any }) => {
     switch (item.type) {
       case 'header':
@@ -32,7 +43,7 @@ export default function HomeScreen() {
       case 'hero':
         return (
           <View style={styles.section}>
-            <StoryCard story={item.data} onPress={() => {}} />
+            <StoryCard story={item.data} onPress={() => handlePress(item.data)} variant="hero" />
           </View>
         );
       case 'section':
@@ -40,9 +51,9 @@ export default function HomeScreen() {
           <View style={styles.section}>
             <SectionHeader title={item.title} />
             {item.data.map((entry: any) => {
-              if (item.title.includes('Pick') || item.title.includes('Story')) return <StoryCard key={entry.id} story={entry} onPress={() => {}} />;
-              if (item.title.includes('Opp')) return <OpportunityCard key={entry.id} opportunity={entry} onPress={() => {}} />;
-              if (item.title.includes('Watch')) return <VideoCard key={entry.id} video={entry} onPress={() => {}} />;
+              if (item.title.includes('Pick') || item.title.includes('Story')) return <StoryCard key={entry.id} story={entry} onPress={() => handlePress(entry)} />;
+              if (item.title.includes('Opp')) return <OpportunityCard key={entry.id} opportunity={entry} onPress={() => handlePress(entry)} />;
+              if (item.title.includes('Watch')) return <VideoCard key={entry.id} video={entry} onPress={() => handlePress(entry)} />;
               if (item.title.includes('Culture')) return <CultureCard key={entry.id} entry={entry} onPress={() => {}} />;
               return null;
             })}

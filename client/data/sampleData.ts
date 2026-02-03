@@ -13,6 +13,9 @@ export type Story = {
   updatedOn: string;
   author: string;
   isPublished: boolean;
+  source: string;
+  srcFavIcon: string;
+  srcLink: string;
 };
 
 export type Opportunity = {
@@ -30,6 +33,9 @@ export type Opportunity = {
   updatedOn: string;
   author: string;
   isPublished: boolean;
+  source: string;
+  srcFavIcon: string;
+  srcLink: string;
 };
 
 export type Video = {
@@ -44,6 +50,9 @@ export type Video = {
   updatedOn: string;
   author: string;
   isPublished: boolean;
+  source: string;
+  srcFavIcon: string;
+  srcLink: string;
 };
 
 export type CultureEntry = {
@@ -84,6 +93,9 @@ export const SAMPLE_STORIES: Story[] = [
     updatedOn: "2026-01-20T14:30:00Z",
     author: "Elena Rodriguez",
     isPublished: true,
+    source: "Craft Council",
+    srcFavIcon: "https://www.google.com/s2/favicons?sz=64&domain=craftcouncil.org",
+    srcLink: "https://www.craftcouncil.org/magazine/article/hands-shape-clay",
   },
   {
     id: "s2",
@@ -102,6 +114,9 @@ export const SAMPLE_STORIES: Story[] = [
     updatedOn: "2026-01-18T09:00:00Z",
     author: "Arjun Singh",
     isPublished: true,
+    source: "Textile Museum",
+    srcFavIcon: "https://www.google.com/s2/favicons?sz=64&domain=textilemuseum.org",
+    srcLink: "https://museum.gwu.edu/weaving-memory-kashmir",
   },
   {
     id: "s3",
@@ -120,6 +135,9 @@ export const SAMPLE_STORIES: Story[] = [
     updatedOn: "2026-01-22T11:00:00Z",
     author: "Yuki Tanaka",
     isPublished: true,
+    source: "Nippon.com",
+    srcFavIcon: "https://www.google.com/s2/favicons?sz=64&domain=nippon.com",
+    srcLink: "https://www.nippon.com/en/features/c04501/",
   },
   {
     id: "s4",
@@ -138,6 +156,9 @@ export const SAMPLE_STORIES: Story[] = [
     updatedOn: "2026-01-25T15:00:00Z",
     author: "Kofi Mensah",
     isPublished: true,
+    source: "UNESCO",
+    srcFavIcon: "https://www.google.com/s2/favicons?sz=64&domain=unesco.org",
+    srcLink: "https://ich.unesco.org/en/RL/bronze-casting-in-benin-city-00001",
   },
 ];
 
@@ -157,6 +178,9 @@ export const SAMPLE_OPPS: Opportunity[] = [
     updatedOn: "2026-01-12T09:30:00Z",
     author: "Makerburg Editorial",
     isPublished: true,
+    source: "Center for Craft",
+    srcFavIcon: "https://www.google.com/s2/favicons?sz=64&domain=centerforcraft.org",
+    srcLink: "https://www.centerforcraft.org/grants/craft-futures-fund",
   },
   {
     id: "o2",
@@ -173,6 +197,9 @@ export const SAMPLE_OPPS: Opportunity[] = [
     updatedOn: "2026-01-15T12:00:00Z",
     author: "Makerburg Editorial",
     isPublished: true,
+    source: "Kyoto Art Center",
+    srcFavIcon: "https://www.google.com/s2/favicons?sz=64&domain=kac.or.jp",
+    srcLink: "https://www.kac.or.jp/eng/residence/",
   },
   {
     id: "o3",
@@ -189,6 +216,9 @@ export const SAMPLE_OPPS: Opportunity[] = [
     updatedOn: "2026-01-20T10:00:00Z",
     author: "Makerburg Editorial",
     isPublished: true,
+    source: "Loewe Foundation",
+    srcFavIcon: "https://www.google.com/s2/favicons?sz=64&domain=loewe.com",
+    srcLink: "https://craftprize.loewe.com/",
   },
   {
     id: "o4",
@@ -205,6 +235,9 @@ export const SAMPLE_OPPS: Opportunity[] = [
     updatedOn: "2026-01-25T14:00:00Z",
     author: "Makerburg Editorial",
     isPublished: true,
+    source: "First Peoples Fund",
+    srcFavIcon: "https://www.google.com/s2/favicons?sz=64&domain=firstpeoplesfund.org",
+    srcLink: "https://www.firstpeoplesfund.org/grants-fellowships",
   },
   {
     id: "o5",
@@ -221,6 +254,9 @@ export const SAMPLE_OPPS: Opportunity[] = [
     updatedOn: "2026-02-01T09:00:00Z",
     author: "Makerburg Editorial",
     isPublished: true,
+    source: "Archie Bray Foundation",
+    srcFavIcon: "https://www.google.com/s2/favicons?sz=64&domain=archiebray.org",
+    srcLink: "https://archiebray.org/residencies/fellowships/",
   },
 ];
 
@@ -237,6 +273,9 @@ export const SAMPLE_VIDEOS: Video[] = [
     updatedOn: "2026-01-12T11:00:00Z",
     author: "Sanjay Gupta",
     isPublished: true,
+    source: "YouTube",
+    srcFavIcon: "https://www.google.com/s2/favicons?sz=64&domain=youtube.com",
+    srcLink: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
   },
   {
     id: "v2",
@@ -250,6 +289,9 @@ export const SAMPLE_VIDEOS: Video[] = [
     updatedOn: "2026-01-18T15:30:00Z",
     author: "Elena Rodriguez",
     isPublished: true,
+    source: "Vimeo",
+    srcFavIcon: "https://www.google.com/s2/favicons?sz=64&domain=vimeo.com",
+    srcLink: "https://vimeo.com/123456789",
   },
   {
     id: "v3",
@@ -263,6 +305,9 @@ export const SAMPLE_VIDEOS: Video[] = [
     updatedOn: "2026-01-22T10:00:00Z",
     author: "Maria Santos",
     isPublished: true,
+    source: "National Geographic",
+    srcFavIcon: "https://www.google.com/s2/favicons?sz=64&domain=nationalgeographic.com",
+    srcLink: "https://www.nationalgeographic.com/video/the-looms-song",
   },
   {
     id: "v4",
@@ -276,6 +321,9 @@ export const SAMPLE_VIDEOS: Video[] = [
     updatedOn: "2026-01-28T14:00:00Z",
     author: "Hiroshi Sato",
     isPublished: true,
+    source: "History Channel",
+    srcFavIcon: "https://www.google.com/s2/favicons?sz=64&domain=history.com",
+    srcLink: "https://www.history.com/shows/forged-in-fire/videos/damascus-steel",
   },
 ];
 
