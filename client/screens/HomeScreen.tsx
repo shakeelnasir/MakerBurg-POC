@@ -30,8 +30,10 @@ export default function HomeScreen() {
     { type: 'section', title: "From the Culture Atlas", data: [SAMPLE_CULTURE[0]] },
   ];
 
-  const handlePress = (item: any) => {
-    if (item.srcLink) {
+  const handlePress = (item: any, type?: string) => {
+    if (type === 'culture') {
+      navigation.navigate("CultureDetail", { entry: item });
+    } else if (item.srcLink) {
       navigation.navigate("WebView", { url: item.srcLink, title: item.title });
     }
   };
@@ -54,7 +56,7 @@ export default function HomeScreen() {
               if (item.title.includes('Pick') || item.title.includes('Story')) return <StoryCard key={entry.id} story={entry} onPress={() => handlePress(entry)} />;
               if (item.title.includes('Opp')) return <OpportunityCard key={entry.id} opportunity={entry} onPress={() => handlePress(entry)} />;
               if (item.title.includes('Watch')) return <VideoCard key={entry.id} video={entry} onPress={() => handlePress(entry)} />;
-              if (item.title.includes('Culture')) return <CultureCard key={entry.id} entry={entry} onPress={() => {}} />;
+              if (item.title.includes('Culture')) return <CultureCard key={entry.id} entry={entry} onPress={() => handlePress(entry, 'culture')} />;
               return null;
             })}
           </View>
