@@ -22,6 +22,9 @@ export const stories = pgTable("stories", {
   body: json("body").$type<string[]>().notNull(),
   inlineImage: text("inline_image"),
   cultureLinks: json("culture_links").$type<{ label: string; value: string }[]>(),
+  source: text("source"),
+  srcFavIcon: text("src_fav_icon"),
+  srcLink: text("src_link"),
 });
 
 export const opportunities = pgTable("opportunities", {
@@ -35,6 +38,9 @@ export const opportunities = pgTable("opportunities", {
   who: json("who").$type<string[]>().notNull(),
   offer: json("offer").$type<string[]>().notNull(),
   linkLabel: text("link_label").notNull(),
+  source: text("source"),
+  srcFavIcon: text("src_fav_icon"),
+  srcLink: text("src_link"),
 });
 
 export const videos = pgTable("videos", {
@@ -45,6 +51,9 @@ export const videos = pgTable("videos", {
   craft: text("craft").notNull(),
   thumb: text("thumb").notNull(),
   description: text("description").notNull(),
+  source: text("source"),
+  srcFavIcon: text("src_fav_icon"),
+  srcLink: text("src_link"),
 });
 
 export const cultureEntries = pgTable("culture_entries", {
