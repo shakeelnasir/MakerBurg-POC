@@ -1,22 +1,43 @@
 import React from "react";
-import { ScrollView, View, StyleSheet } from "react-native";
+import { ScrollView, View, StyleSheet, ActivityIndicator } from "react-native";
 import { Image } from "expo-image";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRoute, RouteProp } from "@react-navigation/native";
-import { RootStackParamList } from "@/navigation/RootStackNavigator";
+import { useQuery } from "@tanstack/react-query";
+
 import { ThemedText } from "@/components/ThemedText";
 import { Pill } from "@/components/Pill";
+import { SaveButton } from "@/components/SaveButton";
 import { useTheme } from "@/hooks/useTheme";
-import { Spacing, BorderRadius } from "@/constants/theme";
+import { Spacing, Colors } from "@/constants/theme";
+import type { RootStackParamList } from "@/navigation/RootStackNavigator";
+import type { CultureEntry } from "@shared/schema";
 
-type CultureDetailScreenRouteProp = RouteProp<RootStackParamList, "CultureDetail">;
+type CultureDetailRouteProp = RouteProp<RootStackParamList, "CultureDetail">;
 
 export default function CultureDetailScreen() {
-  const route = useRoute<CultureDetailScreenRouteProp>();
+  const route = useRoute<CultureDetailRouteProp>();
   const { theme, isDark } = useTheme();
-  const { entry } = route.params;
+  const insets = useSafeAreaInsets();
+  const colors = Colors[isDark ? "dark" : "light"];
+
+  const { data: entry, isLoading } = useQuery<CultureEntry>({
+    queryKey: ["/api/culture", route.params.id],
+  });
+
+  if (isLoading || !entry) {
+    return (
+      <View style={[styles.loading, { backgroundColor: theme.backgroundRoot }]}>
+        <ActivityIndicator size="large" color={theme.accent} />
+      </View>
+    );
+  }
 
   return (
-    <ScrollView style={[styles.container, { backgroundColor: theme.backgroundRoot }]}>
+    <ScrollView
+      style={[styles.container, { backgroundColor: theme.backgroundRoot }]}
+      contentContainerStyle={{ paddingBottom: insets.bottom + Spacing["3xl"] }}
+    >
       <Image
         source={{ uri: entry.hero }}
         style={styles.heroImage}
@@ -24,15 +45,18 @@ export default function CultureDetailScreen() {
         transition={300}
       />
       <View style={styles.content}>
-        <View style={styles.pills}>
-          <Pill label={entry.region} />
-          <Pill label={entry.craft} style={{ marginLeft: Spacing.sm }} />
+        <View style={styles.header}>
+          <View style={styles.pills}>
+            <Pill label={entry.region} />
+            <Pill label={entry.craft} style={{ marginLeft: Spacing.sm }} />
+          </View>
+          <SaveButton item={{ kind: "culture", id: entry.id }} />
         </View>
-        
+
         <ThemedText type="h1" style={styles.title}>
           {entry.title}
         </ThemedText>
-        
+
         <ThemedText type="body" style={styles.intro}>
           {entry.intro}
         </ThemedText>
@@ -56,24 +80,33 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  loading: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   heroImage: {
     width: "100%",
     height: 300,
   },
   content: {
-    padding: Spacing.xl,
-    paddingBottom: Spacing["4xl"],
+    padding: Spacing.pageMargin,
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: Spacing.lg,
   },
   pills: {
     flexDirection: "row",
-    marginBottom: Spacing.lg,
   },
   title: {
     marginBottom: Spacing.lg,
   },
   intro: {
     fontSize: 18,
-    lineHeight: 26,
+    lineHeight: 28,
     marginBottom: Spacing["2xl"],
     opacity: 0.9,
   },
@@ -84,6 +117,6 @@ const styles = StyleSheet.create({
     marginBottom: Spacing.md,
   },
   sectionText: {
-    lineHeight: 24,
+    lineHeight: 26,
   },
 });

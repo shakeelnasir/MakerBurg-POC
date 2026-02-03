@@ -3,12 +3,15 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Feather } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
 import { Platform, StyleSheet } from "react-native";
+
 import HomeStackNavigator from "@/navigation/HomeStackNavigator";
-import { useTheme } from "@/hooks/useTheme";
 import StoriesScreen from "@/screens/StoriesScreen";
 import OpportunitiesScreen from "@/screens/OpportunitiesScreen";
 import WatchScreen from "@/screens/WatchScreen";
 import CultureScreen from "@/screens/CultureScreen";
+import LibraryScreen from "@/screens/LibraryScreen";
+import { useTheme } from "@/hooks/useTheme";
+import { useScreenOptions } from "@/hooks/useScreenOptions";
 
 export type MainTabParamList = {
   HomeTab: undefined;
@@ -16,17 +19,20 @@ export type MainTabParamList = {
   OpportunitiesTab: undefined;
   WatchTab: undefined;
   CultureTab: undefined;
+  LibraryTab: undefined;
 };
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
 export default function MainTabNavigator() {
   const { theme, isDark } = useTheme();
+  const screenOptions = useScreenOptions();
 
   return (
     <Tab.Navigator
       initialRouteName="HomeTab"
       screenOptions={{
+        ...screenOptions,
         tabBarActiveTintColor: theme.tabIconSelected,
         tabBarInactiveTintColor: theme.tabIconDefault,
         tabBarStyle: {
@@ -46,16 +52,20 @@ export default function MainTabNavigator() {
               style={StyleSheet.absoluteFill}
             />
           ) : null,
-        headerShown: false,
+        tabBarLabelStyle: {
+          fontSize: 10,
+          fontWeight: "500",
+        },
       }}
     >
       <Tab.Screen
         name="HomeTab"
         component={HomeStackNavigator}
         options={{
-          title: "Home",
+          title: "Today",
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
-            <Feather name="home" size={size} color={color} />
+            <Feather name="sun" size={size} color={color} />
           ),
         }}
       />
@@ -64,6 +74,7 @@ export default function MainTabNavigator() {
         component={StoriesScreen}
         options={{
           title: "Stories",
+          headerTitle: "Stories",
           tabBarIcon: ({ color, size }) => (
             <Feather name="book-open" size={size} color={color} />
           ),
@@ -73,9 +84,10 @@ export default function MainTabNavigator() {
         name="OpportunitiesTab"
         component={OpportunitiesScreen}
         options={{
-          title: "Opps",
+          title: "Opportunities",
+          headerTitle: "Opportunities",
           tabBarIcon: ({ color, size }) => (
-            <Feather name="briefcase" size={size} color={color} />
+            <Feather name="compass" size={size} color={color} />
           ),
         }}
       />
@@ -84,8 +96,9 @@ export default function MainTabNavigator() {
         component={WatchScreen}
         options={{
           title: "Watch",
+          headerTitle: "Watch",
           tabBarIcon: ({ color, size }) => (
-            <Feather name="play" size={size} color={color} />
+            <Feather name="play-circle" size={size} color={color} />
           ),
         }}
       />
@@ -94,8 +107,20 @@ export default function MainTabNavigator() {
         component={CultureScreen}
         options={{
           title: "Culture",
+          headerTitle: "Culture Atlas",
           tabBarIcon: ({ color, size }) => (
-            <Feather name="map" size={size} color={color} />
+            <Feather name="globe" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="LibraryTab"
+        component={LibraryScreen}
+        options={{
+          title: "Library",
+          headerTitle: "Saved",
+          tabBarIcon: ({ color, size }) => (
+            <Feather name="bookmark" size={size} color={color} />
           ),
         }}
       />
