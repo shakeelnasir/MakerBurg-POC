@@ -9,6 +9,10 @@ export type Story = {
   body: string[];
   inlineImage?: string;
   cultureLinks?: { label: string; value: string }[];
+  createdOn: string;
+  updatedOn: string;
+  author: string;
+  isPublished: boolean;
 };
 
 export type Opportunity = {
@@ -22,6 +26,10 @@ export type Opportunity = {
   who: string[];
   offer: string[];
   linkLabel: string;
+  createdOn: string;
+  updatedOn: string;
+  author: string;
+  isPublished: boolean;
 };
 
 export type Video = {
@@ -32,6 +40,10 @@ export type Video = {
   craft: string;
   thumb: string;
   description: string;
+  createdOn: string;
+  updatedOn: string;
+  author: string;
+  isPublished: boolean;
 };
 
 export type CultureEntry = {
@@ -42,6 +54,10 @@ export type CultureEntry = {
   hero: string;
   intro: string;
   sections: { h: string; p: string }[];
+  createdOn: string;
+  updatedOn: string;
+  author: string;
+  isPublished: boolean;
 };
 
 export const SAMPLE_STORIES: Story[] = [
@@ -64,6 +80,10 @@ export const SAMPLE_STORIES: Story[] = [
       { label: "Culture", value: "Oaxaca Ceramics" },
       { label: "Technique", value: "Hand-thrown Clay" },
     ],
+    createdOn: "2026-01-15T10:00:00Z",
+    updatedOn: "2026-01-20T14:30:00Z",
+    author: "Elena Rodriguez",
+    isPublished: true,
   },
   {
     id: "s2",
@@ -78,6 +98,10 @@ export const SAMPLE_STORIES: Story[] = [
       "In Kashmir, weaving becomes a language of memory, passed hand to hand. Patterns encode stories—of mountains, of seasons, of journeys taken and dreams deferred. Each shawl is a map of someone's life.",
       "Every motif is a map: of landscape, of seasons, of stories lived and told again. The finest Pashmina takes months to complete, a meditation in thread and time.",
     ],
+    createdOn: "2026-01-18T09:00:00Z",
+    updatedOn: "2026-01-18T09:00:00Z",
+    author: "Arjun Singh",
+    isPublished: true,
   },
   {
     id: "s3",
@@ -92,6 +116,10 @@ export const SAMPLE_STORIES: Story[] = [
       "Japanese indigo dyeing, or ai-zome, requires patience measured in years. Masters spend decades learning to read the subtle signs of a healthy vat, adjusting pH, temperature, and timing by instinct.",
       "The deepest blues require dozens of dips, each layer adding depth and complexity. What emerges is a color that seems to hold the sky itself.",
     ],
+    createdOn: "2026-01-22T11:00:00Z",
+    updatedOn: "2026-01-22T11:00:00Z",
+    author: "Yuki Tanaka",
+    isPublished: true,
   },
   {
     id: "s4",
@@ -106,6 +134,10 @@ export const SAMPLE_STORIES: Story[] = [
       "Each piece begins with a wax model, painstakingly carved and then encased in clay. When bronze is poured, the wax melts away, leaving only metal memory.",
       "Today's artists honor their ancestors while pushing the form forward. Contemporary themes meet ancient techniques in works that speak across centuries.",
     ],
+    createdOn: "2026-01-25T15:00:00Z",
+    updatedOn: "2026-01-25T15:00:00Z",
+    author: "Kofi Mensah",
+    isPublished: true,
   },
 ];
 
@@ -121,6 +153,10 @@ export const SAMPLE_OPPS: Opportunity[] = [
     who: ["Individual makers", "Craft collectives", "Small studios"],
     offer: ["Grant funding up to $15,000", "Mentorship program", "Showcase opportunities"],
     linkLabel: "Apply on official site",
+    createdOn: "2026-01-10T08:00:00Z",
+    updatedOn: "2026-01-12T09:30:00Z",
+    author: "Makerburg Editorial",
+    isPublished: true,
   },
   {
     id: "o2",
@@ -133,6 +169,10 @@ export const SAMPLE_OPPS: Opportunity[] = [
     who: ["Artists & makers", "Crafters exploring materials", "Small teams (up to 2)"],
     offer: ["Studio access", "Accommodation provided", "Local mentorship", "Material stipend"],
     linkLabel: "View residency page",
+    createdOn: "2026-01-15T12:00:00Z",
+    updatedOn: "2026-01-15T12:00:00Z",
+    author: "Makerburg Editorial",
+    isPublished: true,
   },
   {
     id: "o3",
@@ -145,6 +185,10 @@ export const SAMPLE_OPPS: Opportunity[] = [
     who: ["Under 35 makers", "Recent graduates", "Self-taught creators"],
     offer: ["Prize funding of €5,000", "Exhibition slot", "Press visibility", "Catalog inclusion"],
     linkLabel: "Open call details",
+    createdOn: "2026-01-20T10:00:00Z",
+    updatedOn: "2026-01-20T10:00:00Z",
+    author: "Makerburg Editorial",
+    isPublished: true,
   },
   {
     id: "o4",
@@ -157,6 +201,10 @@ export const SAMPLE_OPPS: Opportunity[] = [
     who: ["Indigenous artisans", "Traditional craft keepers", "Community craft leaders"],
     offer: ["Full tuition coverage", "Living stipend", "Travel grant", "Materials budget"],
     linkLabel: "Learn more",
+    createdOn: "2026-01-25T14:00:00Z",
+    updatedOn: "2026-01-25T14:00:00Z",
+    author: "Makerburg Editorial",
+    isPublished: true,
   },
   {
     id: "o5",
@@ -169,6 +217,10 @@ export const SAMPLE_OPPS: Opportunity[] = [
     who: ["Professional ceramicists", "Studio potters", "Sculptural artists"],
     offer: ["12-month fellowship", "Private studio", "Kiln access", "$24,000 stipend"],
     linkLabel: "Apply now",
+    createdOn: "2026-02-01T09:00:00Z",
+    updatedOn: "2026-02-01T09:00:00Z",
+    author: "Makerburg Editorial",
+    isPublished: true,
   },
 ];
 
@@ -181,6 +233,10 @@ export const SAMPLE_VIDEOS: Video[] = [
     craft: "Printing",
     thumb: "https://images.unsplash.com/photo-1581349485608-9469926a8e5f?auto=format&fit=crop&w=1400&q=80",
     description: "A short look at the rhythm of block printing—hands, ink, and pattern in motion. Watch as generations of knowledge flow through careful movements.",
+    createdOn: "2026-01-12T11:00:00Z",
+    updatedOn: "2026-01-12T11:00:00Z",
+    author: "Sanjay Gupta",
+    isPublished: true,
   },
   {
     id: "v2",
@@ -190,6 +246,10 @@ export const SAMPLE_VIDEOS: Video[] = [
     craft: "Ceramics",
     thumb: "https://images.unsplash.com/photo-1523413651479-597eb2da0ad6?auto=format&fit=crop&w=1400&q=80",
     description: "From wet clay to fired form—how vessels move through transformation. A meditation on material and making.",
+    createdOn: "2026-01-18T15:30:00Z",
+    updatedOn: "2026-01-18T15:30:00Z",
+    author: "Elena Rodriguez",
+    isPublished: true,
   },
   {
     id: "v3",
@@ -199,6 +259,10 @@ export const SAMPLE_VIDEOS: Video[] = [
     craft: "Textiles",
     thumb: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1400&q=80",
     description: "Backstrap weaving in the highlands—where tradition meets the rhythm of daily life. Colors emerge from ancient patterns.",
+    createdOn: "2026-01-22T10:00:00Z",
+    updatedOn: "2026-01-22T10:00:00Z",
+    author: "Maria Santos",
+    isPublished: true,
   },
   {
     id: "v4",
@@ -208,6 +272,10 @@ export const SAMPLE_VIDEOS: Video[] = [
     craft: "Metalwork",
     thumb: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=1400&q=80",
     description: "The ancient art of folding steel, layer upon layer. Heat, hammer, and patience create blades of legendary strength.",
+    createdOn: "2026-01-28T14:00:00Z",
+    updatedOn: "2026-01-28T14:00:00Z",
+    author: "Hiroshi Sato",
+    isPublished: true,
   },
 ];
 
@@ -233,6 +301,10 @@ export const SAMPLE_CULTURE: CultureEntry[] = [
         p: "More than decoration, Ajrak is a marker of belonging and a living craft economy. It's given at births, weddings, and funerals. Men wear it as turbans; it drapes over shoulders in greeting. The geometric patterns are said to represent the cosmos, connecting wearers to something larger.",
       },
     ],
+    createdOn: "2026-01-10T10:00:00Z",
+    updatedOn: "2026-01-10T10:00:00Z",
+    author: "Zainab Ali",
+    isPublished: true,
   },
   {
     id: "c2",
@@ -255,6 +327,10 @@ export const SAMPLE_CULTURE: CultureEntry[] = [
         p: "Today, Kintsugi has become a metaphor for resilience. Artists worldwide apply its principles to ceramics, furniture, and even digital art. The message remains: our breaks and repairs are part of what makes us beautiful.",
       },
     ],
+    createdOn: "2026-01-15T11:00:00Z",
+    updatedOn: "2026-01-15T11:00:00Z",
+    author: "Kenji Nakamura",
+    isPublished: true,
   },
   {
     id: "c3",
@@ -277,5 +353,9 @@ export const SAMPLE_CULTURE: CultureEntry[] = [
         p: "Young Turkish designers are reviving kilim traditions, working with village weavers to create contemporary pieces. The ancient craft finds new life in modern interiors, connecting global audiences to Anatolian heritage.",
       },
     ],
+    createdOn: "2026-01-20T14:00:00Z",
+    updatedOn: "2026-01-20T14:00:00Z",
+    author: "Fatima Kaya",
+    isPublished: true,
   },
 ];
