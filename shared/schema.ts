@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, json } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, json, timestamp, boolean } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -25,6 +25,10 @@ export const stories = pgTable("stories", {
   source: text("source"),
   srcFavIcon: text("src_fav_icon"),
   srcLink: text("src_link"),
+  author: text("author"),
+  isPublished: boolean("is_published").default(true),
+  createdOn: timestamp("created_on").defaultNow(),
+  updatedOn: timestamp("updated_on").defaultNow(),
 });
 
 export const opportunities = pgTable("opportunities", {
@@ -41,6 +45,10 @@ export const opportunities = pgTable("opportunities", {
   source: text("source"),
   srcFavIcon: text("src_fav_icon"),
   srcLink: text("src_link"),
+  author: text("author"),
+  isPublished: boolean("is_published").default(true),
+  createdOn: timestamp("created_on").defaultNow(),
+  updatedOn: timestamp("updated_on").defaultNow(),
 });
 
 export const videos = pgTable("videos", {
@@ -54,6 +62,10 @@ export const videos = pgTable("videos", {
   source: text("source"),
   srcFavIcon: text("src_fav_icon"),
   srcLink: text("src_link"),
+  author: text("author"),
+  isPublished: boolean("is_published").default(true),
+  createdOn: timestamp("created_on").defaultNow(),
+  updatedOn: timestamp("updated_on").defaultNow(),
 });
 
 export const cultureEntries = pgTable("culture_entries", {
@@ -64,6 +76,10 @@ export const cultureEntries = pgTable("culture_entries", {
   hero: text("hero").notNull(),
   intro: text("intro").notNull(),
   sections: json("sections").$type<{ h: string; p: string }[]>().notNull(),
+  author: text("author"),
+  isPublished: boolean("is_published").default(true),
+  createdOn: timestamp("created_on").defaultNow(),
+  updatedOn: timestamp("updated_on").defaultNow(),
 });
 
 export const savedItems = pgTable("saved_items", {
