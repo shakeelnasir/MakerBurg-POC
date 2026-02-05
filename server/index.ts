@@ -234,12 +234,14 @@ function setupErrorHandler(app: express.Application) {
   setupBodyParsing(app);
   setupRequestLogging(app);
 
-  configureExpoAndLanding(app);
-
   // Seed database with sample data
   await seedDatabase();
 
+  // Register API routes BEFORE static file serving
   const server = await registerRoutes(app);
+
+  // Static files and landing page (must be after API routes)
+  configureExpoAndLanding(app);
 
   setupErrorHandler(app);
 

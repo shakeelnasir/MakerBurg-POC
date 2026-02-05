@@ -4,6 +4,7 @@ import {
   View,
   ActivityIndicator,
   RefreshControl,
+  Pressable,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
@@ -26,6 +27,7 @@ export default function StoriesScreen() {
   const {
     data: stories,
     isLoading,
+    error,
     refetch,
     isRefetching,
   } = useQuery<Story[]>({
@@ -43,6 +45,32 @@ export default function StoriesScreen() {
         }}
       >
         <ActivityIndicator size="large" color={theme.textPrimary} />
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: theme.backgroundRoot,
+          justifyContent: "center",
+          alignItems: "center",
+          padding: Spacing.xl,
+        }}
+      >
+        <ThemedText type="h3" style={{ marginBottom: Spacing.md }}>
+          Error loading stories
+        </ThemedText>
+        <ThemedText type="body" style={{ textAlign: "center", marginBottom: Spacing.lg }}>
+          {error.message}
+        </ThemedText>
+        <Pressable onPress={() => refetch()} style={{ padding: Spacing.md }}>
+          <ThemedText type="body" style={{ color: theme.textPrimary }}>
+            Tap to retry
+          </ThemedText>
+        </Pressable>
       </View>
     );
   }
@@ -67,11 +95,17 @@ export default function StoriesScreen() {
           paddingTop: insets.top + Spacing.xl,
           paddingBottom: Spacing.xl + 80,
           paddingHorizontal: Spacing.lg,
+          flexGrow: 1,
         }}
         ListHeaderComponent={() => (
           <ThemedText type="h1" style={{ marginBottom: Spacing.lg }}>
             Stories
           </ThemedText>
+        )}
+        ListEmptyComponent={() => (
+          <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+            <ThemedText type="body">No stories found</ThemedText>
+          </View>
         )}
         refreshControl={
           <RefreshControl
