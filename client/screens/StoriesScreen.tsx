@@ -1,5 +1,10 @@
 import React from "react";
-import { FlatList, View, ActivityIndicator, RefreshControl } from "react-native";
+import {
+  FlatList,
+  View,
+  ActivityIndicator,
+  RefreshControl,
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -18,13 +23,25 @@ export default function StoriesScreen() {
   const { theme } = useTheme();
   const navigation = useNavigation<NavigationProp>();
 
-  const { data: stories, isLoading, refetch, isRefetching } = useQuery<Story[]>({
+  const {
+    data: stories,
+    isLoading,
+    refetch,
+    isRefetching,
+  } = useQuery<Story[]>({
     queryKey: ["/api/stories"],
   });
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, backgroundColor: theme.backgroundRoot, justifyContent: "center", alignItems: "center" }}>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: theme.backgroundRoot,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <ActivityIndicator size="large" color={theme.textPrimary} />
       </View>
     );
@@ -36,9 +53,14 @@ export default function StoriesScreen() {
         data={stories || []}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <StoryCard 
-            story={item} 
-            onPress={() => navigation.navigate("WebView", { url: item.srcLink || "", title: item.title })} 
+          <StoryCard
+            story={item}
+            onPress={() =>
+              navigation.navigate("WebView", {
+                url: item.srcLink || "",
+                title: item.title,
+              })
+            }
           />
         )}
         contentContainerStyle={{
@@ -47,10 +69,16 @@ export default function StoriesScreen() {
           paddingHorizontal: Spacing.lg,
         }}
         ListHeaderComponent={() => (
-          <ThemedText type="h1" style={{ marginBottom: Spacing.lg }}>Stories</ThemedText>
+          <ThemedText type="h1" style={{ marginBottom: Spacing.lg }}>
+            Stories
+          </ThemedText>
         )}
         refreshControl={
-          <RefreshControl refreshing={isRefetching} onRefresh={refetch} tintColor={theme.textPrimary} />
+          <RefreshControl
+            refreshing={isRefetching}
+            onRefresh={refetch}
+            tintColor={theme.textPrimary}
+          />
         }
       />
     </View>
