@@ -1,0 +1,101 @@
+{
+  "id": "cd281d99-4b2d-4abc-92f4-b01c5e14a29d",
+  "createdAt": "2026-02-05T13:50:37.821Z",
+  "runtimeVersion": "exposdk:54.0.0",
+  "launchAsset": {
+    "key": "bundle-1770299437821-3703",
+    "contentType": "application/javascript",
+    "url": "https://7542f4ee-f905-4e2a-9fea-9974f6348c37-00-19jsf82ir9x84.janeway.replit.dev/1770299437821-3703/_expo/static/js/ios/bundle.js"
+  },
+  "assets": [],
+  "metadata": {},
+  "extra": {
+    "eas": {},
+    "expoClient": {
+      "name": "Makerburg",
+      "slug": "makerburg",
+      "version": "1.0.0",
+      "orientation": "portrait",
+      "icon": "./assets/images/icon.png",
+      "scheme": "makerburg",
+      "userInterfaceStyle": "automatic",
+      "newArchEnabled": true,
+      "ios": {
+        "supportsTablet": true,
+        "bundleIdentifier": "com.makerburg.app"
+      },
+      "android": {
+        "adaptiveIcon": {
+          "backgroundColor": "#F6F2EC",
+          "foregroundImage": "./assets/images/icon.png",
+          "foregroundImageUrl": "https://7542f4ee-f905-4e2a-9fea-9974f6348c37-00-19jsf82ir9x84.janeway.replit.dev/assets/./assets/images/icon.png"
+        },
+        "edgeToEdgeEnabled": true,
+        "predictiveBackGestureEnabled": false,
+        "package": "com.makerburg.app"
+      },
+      "web": {
+        "output": "single",
+        "favicon": "./assets/images/icon.png"
+      },
+      "plugins": [
+        [
+          "expo-splash-screen",
+          {
+            "image": "./assets/images/splash-icon.png",
+            "imageWidth": 200,
+            "resizeMode": "contain",
+            "backgroundColor": "#F6F2EC",
+            "dark": {
+              "backgroundColor": "#1A1816"
+            }
+          }
+        ],
+        "expo-web-browser"
+      ],
+      "experiments": {
+        "reactCompiler": true
+      },
+      "_internal": {
+        "isDebug": false,
+        "projectRoot": "/home/runner/workspace",
+        "dynamicConfigPath": {},
+        "staticConfigPath": "/home/runner/workspace/app.json",
+        "packageJsonPath": "/home/runner/workspace/package.json",
+        "pluginHistory": {
+          "expo-splash-screen": {
+            "name": "expo-splash-screen",
+            "version": "31.0.11"
+          },
+          "expo-web-browser": {
+            "name": "expo-web-browser",
+            "version": "15.0.9"
+          }
+        }
+      },
+      "sdkVersion": "54.0.0",
+      "platforms": [
+        "ios",
+        "android",
+        "web"
+      ],
+      "androidStatusBar": {
+        "backgroundColor": "#F6F2EC"
+      },
+      "iconUrl": "https://7542f4ee-f905-4e2a-9fea-9974f6348c37-00-19jsf82ir9x84.janeway.replit.dev/assets/./assets/images/icon.png",
+      "hostUri": "7542f4ee-f905-4e2a-9fea-9974f6348c37-00-19jsf82ir9x84.janeway.replit.dev/ios"
+    },
+    "expoGo": {
+      "debuggerHost": "7542f4ee-f905-4e2a-9fea-9974f6348c37-00-19jsf82ir9x84.janeway.replit.dev/ios",
+      "developer": {
+        "tool": "expo-cli",
+        "projectRoot": "/home/runner/workspace"
+      },
+      "packagerOpts": {
+        "dev": false
+      },
+      "mainModuleName": "client/index"
+    },
+    "scopeKey": "@anonymous/makerburg-473ac36d-0fa2-4f80-931d-9e1046458444"
+  }
+}
