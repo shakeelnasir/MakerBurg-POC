@@ -11,7 +11,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { Pill } from "@/components/Pill";
 import { useTheme } from "@/hooks/useTheme";
 import { Colors, Spacing, BorderRadius } from "@/constants/theme";
-import { Story } from "@/data/sampleData";
+import { Story } from "@shared/schema";
 
 interface StoryCardProps {
   story: Story;

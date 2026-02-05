@@ -44,11 +44,25 @@ The app is fully functional with:
 - **Style**: Calm, museum-quality editorial aesthetic inspired by Google Arts & Culture
 - **Typography**: System fonts with clear hierarchy
 
+## Database Schema Fields
+All content models include:
+- `author` - Content author
+- `isPublished` - Publication status (boolean, defaults to true)
+- `createdOn` - Creation timestamp
+- `updatedOn` - Last update timestamp
+
+Stories, Opportunities, and Videos additionally include:
+- `source` - Content source name
+- `srcFavIcon` - Source favicon URL
+- `srcLink` - Source link URL
+
 ## Recent Changes
+- 2026-02-05: Added author, isPublished, createdOn, updatedOn fields to all content models
+- 2026-02-05: Added source, srcFavIcon, srcLink fields to Stories, Opportunities, Videos
+- 2026-02-05: Updated all screens to fetch data from API using React Query
 - 2026-02-03: Integrated PostgreSQL database with Drizzle ORM
 - 2026-02-03: Created database schema for stories, opportunities, videos, culture entries
 - 2026-02-03: Migrated sample data from static file to database
-- 2026-02-03: Updated all screens to fetch data from API endpoints
 - 2026-02-03: Added save/bookmark functionality with library screen
 
 ## Running the App

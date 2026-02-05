@@ -12,7 +12,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { Pill } from "@/components/Pill";
 import { useTheme } from "@/hooks/useTheme";
 import { Colors, Spacing, BorderRadius } from "@/constants/theme";
-import { Video } from "@/data/sampleData";
+import { Video } from "@shared/schema";
 
 interface VideoCardProps {
   video: Video;

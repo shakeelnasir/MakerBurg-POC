@@ -7,7 +7,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { Pill } from "@/components/Pill";
 import { useTheme } from "@/hooks/useTheme";
 import { Spacing, BorderRadius } from "@/constants/theme";
-import { CultureEntry } from "@/data/sampleData";
+import { CultureEntry } from "@shared/schema";
 
 type CultureDetailScreenRouteProp = RouteProp<RootStackParamList, "CultureDetail">;
 

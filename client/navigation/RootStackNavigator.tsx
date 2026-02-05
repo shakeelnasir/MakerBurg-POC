@@ -1,15 +1,13 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MainTabNavigator from "@/navigation/MainTabNavigator";
-import ModalScreen from "@/screens/ModalScreen";
 import WebViewScreen from "@/screens/WebViewScreen";
 import CultureDetailScreen from "@/screens/CultureDetailScreen";
 import { useScreenOptions } from "@/hooks/useScreenOptions";
-import { CultureEntry } from "@/data/sampleData";
+import { CultureEntry } from "@shared/schema";
 
 export type RootStackParamList = {
   Main: undefined;
-  Modal: undefined;
   WebView: { url: string; title: string };
   CultureDetail: { entry: CultureEntry };
 };
@@ -25,14 +23,6 @@ export default function RootStackNavigator() {
         name="Main"
         component={MainTabNavigator}
         options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Modal"
-        component={ModalScreen}
-        options={{
-          presentation: "modal",
-          headerTitle: "Modal",
-        }}
       />
       <Stack.Screen
         name="WebView"

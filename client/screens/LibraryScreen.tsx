@@ -1,16 +1,17 @@
 import React from "react";
-import { View, FlatList, StyleSheet, Pressable } from "react-native";
+import { View, FlatList, StyleSheet, Pressable, ActivityIndicator } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Feather } from "@expo/vector-icons";
+import { useQuery } from "@tanstack/react-query";
 
 import { ThemedText } from "@/components/ThemedText";
 import { useTheme } from "@/hooks/useTheme";
 import { useApp } from "@/context/AppContext";
 import { Spacing, Colors, BorderRadius } from "@/constants/theme";
 import type { RootStackParamList } from "@/navigation/RootStackNavigator";
-import { SAMPLE_STORIES, SAMPLE_OPPS, SAMPLE_VIDEOS, SAMPLE_CULTURE } from "@/data/sampleData";
+import { Story, Opportunity, Video, CultureEntry } from "@shared/schema";
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
@@ -21,22 +22,37 @@ export default function LibraryScreen() {
   const navigation = useNavigation<NavigationProp>();
   const { saved, loggedIn, setShowLoginModal } = useApp();
 
+  const { data: stories, isLoading: storiesLoading } = useQuery<Story[]>({
+    queryKey: ["/api/stories"],
+  });
+  const { data: opportunities, isLoading: oppsLoading } = useQuery<Opportunity[]>({
+    queryKey: ["/api/opportunities"],
+  });
+  const { data: videos, isLoading: videosLoading } = useQuery<Video[]>({
+    queryKey: ["/api/videos"],
+  });
+  const { data: culture, isLoading: cultureLoading } = useQuery<CultureEntry[]>({
+    queryKey: ["/api/culture"],
+  });
+
+  const isLoading = storiesLoading || oppsLoading || videosLoading || cultureLoading;
+
   const savedItems = saved.items
     .map((item) => {
       if (item.kind === "story") {
-        const story = SAMPLE_STORIES.find((s) => s.id === item.id);
+        const story = stories?.find((s) => s.id === item.id);
         return story ? { kind: "story" as const, data: story } : null;
       }
       if (item.kind === "opportunity") {
-        const opp = SAMPLE_OPPS.find((o) => o.id === item.id);
+        const opp = opportunities?.find((o) => o.id === item.id);
         return opp ? { kind: "opportunity" as const, data: opp } : null;
       }
       if (item.kind === "video") {
-        const video = SAMPLE_VIDEOS.find((v) => v.id === item.id);
+        const video = videos?.find((v) => v.id === item.id);
         return video ? { kind: "video" as const, data: video } : null;
       }
       if (item.kind === "culture") {
-        const entry = SAMPLE_CULTURE.find((c) => c.id === item.id);
+        const entry = culture?.find((c) => c.id === item.id);
         return entry ? { kind: "culture" as const, data: entry } : null;
       }
       return null;
@@ -46,7 +62,7 @@ export default function LibraryScreen() {
   const handleItemPress = (item: typeof savedItems[0]) => {
     if (!item) return;
     if (item.kind === "story" || item.kind === "opportunity" || item.kind === "video") {
-      navigation.navigate("WebView", { url: item.data.srcLink, title: item.data.title });
+      navigation.navigate("WebView", { url: item.data.srcLink || "", title: item.data.title });
     } else if (item.kind === "culture") {
       navigation.navigate("CultureDetail", { entry: item.data });
     }
@@ -101,6 +117,14 @@ export default function LibraryScreen() {
             Sign in
           </ThemedText>
         </Pressable>
+      </View>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, backgroundColor: theme.backgroundRoot, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color={theme.textPrimary} />
       </View>
     );
   }

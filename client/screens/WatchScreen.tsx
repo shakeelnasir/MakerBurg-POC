@@ -1,14 +1,15 @@
 import React from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, View, ActivityIndicator, RefreshControl } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useQuery } from "@tanstack/react-query";
 import { useTheme } from "@/hooks/useTheme";
 import { Spacing } from "@/constants/theme";
 import { VideoCard } from "@/components/VideoCard";
-import { SAMPLE_VIDEOS } from "@/data/sampleData";
 import { ThemedText } from "@/components/ThemedText";
 import { RootStackParamList } from "@/navigation/RootStackNavigator";
+import { Video } from "@shared/schema";
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
@@ -17,15 +18,27 @@ export default function WatchScreen() {
   const { theme } = useTheme();
   const navigation = useNavigation<NavigationProp>();
 
+  const { data: videos, isLoading, refetch, isRefetching } = useQuery<Video[]>({
+    queryKey: ["/api/videos"],
+  });
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, backgroundColor: theme.backgroundRoot, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color={theme.textPrimary} />
+      </View>
+    );
+  }
+
   return (
     <View style={{ flex: 1, backgroundColor: theme.backgroundRoot }}>
       <FlatList
-        data={SAMPLE_VIDEOS}
+        data={videos || []}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <VideoCard 
             video={item} 
-            onPress={() => navigation.navigate("WebView", { url: item.srcLink, title: item.title })} 
+            onPress={() => navigation.navigate("WebView", { url: item.srcLink || "", title: item.title })} 
           />
         )}
         contentContainerStyle={{
@@ -36,6 +49,9 @@ export default function WatchScreen() {
         ListHeaderComponent={() => (
           <ThemedText type="h1" style={{ marginBottom: Spacing.lg }}>Watch</ThemedText>
         )}
+        refreshControl={
+          <RefreshControl refreshing={isRefetching} onRefresh={refetch} tintColor={theme.textPrimary} />
+        }
       />
     </View>
   );

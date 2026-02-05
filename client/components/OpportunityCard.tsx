@@ -12,7 +12,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { Pill } from "@/components/Pill";
 import { useTheme } from "@/hooks/useTheme";
 import { Colors, Spacing, BorderRadius } from "@/constants/theme";
-import { Opportunity } from "@/data/sampleData";
+import { Opportunity } from "@shared/schema";
 
 interface OpportunityCardProps {
   opportunity: Opportunity;
