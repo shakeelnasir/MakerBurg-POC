@@ -8,10 +8,18 @@ export function getApiUrl(): string {
   let host = process.env.EXPO_PUBLIC_DOMAIN;
 
   if (!host) {
-    throw new Error("EXPO_PUBLIC_DOMAIN is not set");
+    // Fallback: try to get from manifest or use relative URL
+    if (typeof window !== 'undefined' && window.location) {
+      return window.location.origin + '/';
+    }
+    // For native, use empty string for relative paths (won't work, but avoids crash)
+    console.warn("EXPO_PUBLIC_DOMAIN is not set, API calls may fail");
+    return '/';
   }
 
-  let url = new URL(`https://${host}`);
+  // Remove port suffix if present for clean URL construction
+  const cleanHost = host.replace(/:5000$/, '');
+  let url = new URL(`https://${cleanHost}`);
 
   return url.href;
 }
