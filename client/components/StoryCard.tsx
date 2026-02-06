@@ -22,7 +22,11 @@ interface StoryCardProps {
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-export function StoryCard({ story, onPress, variant = "default" }: StoryCardProps) {
+export function StoryCard({
+  story,
+  onPress,
+  variant = "default",
+}: StoryCardProps) {
   const { theme, isDark } = useTheme();
   const colors = Colors[isDark ? "dark" : "light"];
   const scale = useSharedValue(1);
@@ -42,7 +46,10 @@ export function StoryCard({ story, onPress, variant = "default" }: StoryCardProp
   const SourceBadge = () => (
     <View style={styles.sourceContainer}>
       <Image source={{ uri: story.srcFavIcon }} style={styles.sourceFavIcon} />
-      <ThemedText type="small" style={{ color: colors.textSecondary, fontSize: 10 }}>
+      <ThemedText
+        type="small"
+        style={{ color: colors.textSecondary, fontSize: 10 }}
+      >
         {story.source}
       </ThemedText>
     </View>
@@ -68,10 +75,14 @@ export function StoryCard({ story, onPress, variant = "default" }: StoryCardProp
               <Pill label={story.region} />
               <Pill label={story.craft} style={{ marginLeft: Spacing.sm }} />
             </View>
-            <SaveButton item={{ kind: "story", id: story.id }} size={20} color="#FFFFFF" />
+            <SaveButton
+              item={{ kind: "story", id: story.id }}
+              size={20}
+              color="#FFFFFF"
+            />
           </View>
           <ThemedText type="h2" style={styles.heroTitle}>
-            {story.title}
+            Read
           </ThemedText>
           <ThemedText type="body" style={styles.heroSubtitle}>
             {story.subtitle}
@@ -110,7 +121,7 @@ export function StoryCard({ story, onPress, variant = "default" }: StoryCardProp
           <SaveButton item={{ kind: "story", id: story.id }} size={20} />
         </View>
         <ThemedText type="h4" style={styles.title}>
-          {story.title}
+          Read
         </ThemedText>
         <ThemedText
           type="body"
@@ -163,15 +174,15 @@ const styles = StyleSheet.create({
     marginBottom: Spacing.sm,
   },
   cardFooter: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginTop: Spacing.xs,
   },
   readTime: {},
   sourceContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   sourceFavIcon: {
     width: 14,
@@ -213,8 +224,8 @@ const styles = StyleSheet.create({
     marginBottom: Spacing.sm,
   },
   heroSourceBadge: {
-    alignSelf: 'flex-end',
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    alignSelf: "flex-end",
+    backgroundColor: "rgba(0,0,0,0.5)",
     paddingHorizontal: 6,
     paddingVertical: 2,
     borderRadius: 4,
