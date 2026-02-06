@@ -7,8 +7,9 @@ export const users = pgTable("users", {
   id: varchar("id")
     .primaryKey()
     .default(sql`gen_random_uuid()`),
-  username: text("username").notNull().unique(),
+  email: text("email").notNull().unique(),
   password: text("password").notNull(),
+  createdOn: timestamp("created_on").defaultNow(),
 });
 
 export const stories = pgTable("stories", {
@@ -92,7 +93,7 @@ export const savedItems = pgTable("saved_items", {
 });
 
 export const insertUserSchema = createInsertSchema(users).pick({
-  username: true,
+  email: true,
   password: true,
 });
 
