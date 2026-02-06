@@ -124,7 +124,7 @@ export default function LibraryScreen() {
   if (isLoading) {
     return (
       <View style={{ flex: 1, backgroundColor: theme.backgroundRoot, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" color={theme.textPrimary} />
+        <ActivityIndicator size="large" color={theme.text} />
       </View>
     );
   }
