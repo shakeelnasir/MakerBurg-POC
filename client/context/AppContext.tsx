@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState, useCallback, ReactNode } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { apiRequest, getApiUrl } from "@/lib/query-client";
 
-const KEY_AUTH = "makerburg_auth_v1";
 const KEY_SAVED = "makerburg_saved_v1";
 
 export type SavedItem =
@@ -24,9 +24,19 @@ function uniqSaved(items: SavedItem[]) {
   });
 }
 
+export type AuthUser = {
+  id: string;
+  email: string;
+};
+
 interface AppContextType {
+  user: AuthUser | null;
   loggedIn: boolean;
   setLoggedIn: (value: boolean) => void;
+  setUser: (user: AuthUser | null) => void;
+  login: (email: string, password: string) => Promise<{ ok: boolean; error?: string }>;
+  register: (email: string, password: string) => Promise<{ ok: boolean; error?: string }>;
+  logout: () => Promise<void>;
   saved: SavedState;
   toggleSave: (item: SavedItem) => void;
   isSaved: (item: SavedItem) => boolean;
@@ -40,17 +50,25 @@ interface AppContextType {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export function AppProvider({ children }: { children: ReactNode }) {
-  const [loggedIn, setLoggedInState] = useState(false);
+  const [user, setUser] = useState<AuthUser | null>(null);
   const [saved, setSaved] = useState<SavedState>({ items: [] });
   const [authReady, setAuthReady] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [pendingSaveItem, setPendingSaveItem] = useState<SavedItem | null>(null);
 
+  const loggedIn = user !== null;
+
   useEffect(() => {
     (async () => {
       try {
-        const auth = await AsyncStorage.getItem(KEY_AUTH);
-        setLoggedInState(auth === "1");
+        const baseUrl = getApiUrl();
+        const res = await fetch(new URL("/api/auth/me", baseUrl), {
+          credentials: "include",
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setUser(data);
+        }
         const raw = await AsyncStorage.getItem(KEY_SAVED);
         if (raw) setSaved(JSON.parse(raw));
       } catch (e) {
@@ -61,11 +79,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const setLoggedIn = useCallback(async (value: boolean) => {
-    setLoggedInState(value);
-    try {
-      await AsyncStorage.setItem(KEY_AUTH, value ? "1" : "0");
-    } catch (e) {
-      console.error("Error saving auth state:", e);
+    if (!value) {
+      setUser(null);
     }
   }, []);
 
@@ -75,6 +90,51 @@ export function AppProvider({ children }: { children: ReactNode }) {
       console.error("Error saving saved items:", e)
     );
   }, [saved, authReady]);
+
+  const login = useCallback(async (email: string, password: string): Promise<{ ok: boolean; error?: string }> => {
+    try {
+      const res = await apiRequest("POST", "/api/auth/login", { email, password });
+      const data = await res.json();
+      setUser(data);
+      return { ok: true };
+    } catch (e: any) {
+      const msg = e.message || "Login failed";
+      const errorText = msg.includes(":") ? msg.split(":").slice(1).join(":").trim() : msg;
+      try {
+        const parsed = JSON.parse(errorText);
+        return { ok: false, error: parsed.error || errorText };
+      } catch {
+        return { ok: false, error: errorText };
+      }
+    }
+  }, []);
+
+  const register = useCallback(async (email: string, password: string): Promise<{ ok: boolean; error?: string }> => {
+    try {
+      const res = await apiRequest("POST", "/api/auth/register", { email, password });
+      const data = await res.json();
+      setUser(data);
+      return { ok: true };
+    } catch (e: any) {
+      const msg = e.message || "Registration failed";
+      const errorText = msg.includes(":") ? msg.split(":").slice(1).join(":").trim() : msg;
+      try {
+        const parsed = JSON.parse(errorText);
+        return { ok: false, error: parsed.error || errorText };
+      } catch {
+        return { ok: false, error: errorText };
+      }
+    }
+  }, []);
+
+  const logout = useCallback(async () => {
+    try {
+      await apiRequest("POST", "/api/auth/logout");
+    } catch (e) {
+      console.error("Logout error:", e);
+    }
+    setUser(null);
+  }, []);
 
   const toggleSave = useCallback((item: SavedItem) => {
     const key = `${item.kind}:${item.id}`;
@@ -96,8 +156,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
   return (
     <AppContext.Provider
       value={{
+        user,
         loggedIn,
         setLoggedIn,
+        setUser,
+        login,
+        register,
+        logout,
         saved,
         toggleSave,
         isSaved,

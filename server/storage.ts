@@ -28,7 +28,8 @@ export interface IStorage {
   getSavedItemsByUser(userId: string): Promise<SavedItem[]>;
   addSavedItem(userId: string, itemKind: string, itemId: string): Promise<SavedItem>;
   removeSavedItem(userId: string, itemKind: string, itemId: string): Promise<void>;
-  getUserByUsername(username: string): Promise<User | undefined>;
+  getUserByEmail(email: string): Promise<User | undefined>;
+  getUserById(id: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
 }
 
@@ -93,8 +94,13 @@ export class DatabaseStorage implements IStorage {
       );
   }
 
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    const result = await db.select().from(users).where(eq(users.username, username));
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    const result = await db.select().from(users).where(eq(users.email, email));
+    return result[0];
+  }
+
+  async getUserById(id: string): Promise<User | undefined> {
+    const result = await db.select().from(users).where(eq(users.id, id));
     return result[0];
   }
 

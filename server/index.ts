@@ -1,5 +1,7 @@
 import express from "express";
 import type { Request, Response, NextFunction } from "express";
+import session from "express-session";
+import connectPgSimple from "connect-pg-simple";
 import { registerRoutes } from "./routes";
 import { seedDatabase } from "./seed";
 import * as fs from "fs";
@@ -11,6 +13,12 @@ const log = console.log;
 declare module "http" {
   interface IncomingMessage {
     rawBody: unknown;
+  }
+}
+
+declare module "express-session" {
+  interface SessionData {
+    userId: string;
   }
 }
 
@@ -232,6 +240,26 @@ function setupErrorHandler(app: express.Application) {
 (async () => {
   setupCors(app);
   setupBodyParsing(app);
+
+  const PgStore = connectPgSimple(session);
+  app.use(
+    session({
+      store: new PgStore({
+        conString: process.env.DATABASE_URL,
+        createTableIfMissing: true,
+      }),
+      secret: process.env.SESSION_SECRET || "makerburg-dev-secret",
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        secure: process.env.NODE_ENV === "production",
+        httpOnly: true,
+        maxAge: 30 * 24 * 60 * 60 * 1000,
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      },
+    })
+  );
+
   setupRequestLogging(app);
 
   // Seed database with sample data
