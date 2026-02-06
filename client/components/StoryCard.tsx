@@ -9,6 +9,7 @@ import Animated, {
 
 import { ThemedText } from "@/components/ThemedText";
 import { Pill } from "@/components/Pill";
+import { SaveButton } from "@/components/SaveButton";
 import { useTheme } from "@/hooks/useTheme";
 import { Colors, Spacing, BorderRadius } from "@/constants/theme";
 import { Story } from "@shared/schema";
@@ -62,9 +63,12 @@ export function StoryCard({ story, onPress, variant = "default" }: StoryCardProp
           transition={300}
         />
         <View style={styles.heroOverlay}>
-          <View style={styles.heroPills}>
-            <Pill label={story.region} />
-            <Pill label={story.craft} style={{ marginLeft: Spacing.sm }} />
+          <View style={styles.heroTopRow}>
+            <View style={styles.heroPills}>
+              <Pill label={story.region} />
+              <Pill label={story.craft} style={{ marginLeft: Spacing.sm }} />
+            </View>
+            <SaveButton item={{ kind: "story", id: story.id }} size={20} color="#FFFFFF" />
           </View>
           <ThemedText type="h2" style={styles.heroTitle}>
             {story.title}
@@ -98,9 +102,12 @@ export function StoryCard({ story, onPress, variant = "default" }: StoryCardProp
         transition={300}
       />
       <View style={styles.content}>
-        <View style={styles.pills}>
-          <Pill label={story.region} />
-          <Pill label={story.craft} style={{ marginLeft: Spacing.sm }} />
+        <View style={styles.contentTopRow}>
+          <View style={styles.pills}>
+            <Pill label={story.region} />
+            <Pill label={story.craft} style={{ marginLeft: Spacing.sm }} />
+          </View>
+          <SaveButton item={{ kind: "story", id: story.id }} size={20} />
         </View>
         <ThemedText type="h4" style={styles.title}>
           {story.title}
@@ -139,9 +146,15 @@ const styles = StyleSheet.create({
   content: {
     padding: Spacing.lg,
   },
+  contentTopRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    marginBottom: Spacing.sm,
+  },
   pills: {
     flexDirection: "row",
-    marginBottom: Spacing.md,
+    flex: 1,
   },
   title: {
     marginBottom: Spacing.xs,
@@ -181,9 +194,15 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     padding: Spacing.xl,
   },
+  heroTopRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    marginBottom: Spacing.md,
+  },
   heroPills: {
     flexDirection: "row",
-    marginBottom: Spacing.md,
+    flex: 1,
   },
   heroTitle: {
     color: "#FFFFFF",

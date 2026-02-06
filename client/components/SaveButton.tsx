@@ -40,19 +40,11 @@ export function SaveButton({ item, size = 22, color }: SaveButtonProps) {
       ]}
     >
       <Feather
-        name={saved ? "bookmark" : "bookmark"}
+        name="bookmark"
         size={size}
-        color={iconColor}
-        style={{ opacity: saved ? 1 : 0.7 }}
+        color={saved ? theme.accent : iconColor}
+        style={{ opacity: saved ? 1 : 0.5 }}
       />
-      {saved ? (
-        <Feather
-          name="check"
-          size={12}
-          color={iconColor}
-          style={styles.checkIcon}
-        />
-      ) : null}
     </Pressable>
   );
 }
@@ -61,10 +53,5 @@ const styles = StyleSheet.create({
   button: {
     position: "relative",
     padding: 4,
-  },
-  checkIcon: {
-    position: "absolute",
-    bottom: 2,
-    right: 0,
   },
 });

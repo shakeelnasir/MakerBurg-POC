@@ -10,6 +10,7 @@ import Animated, {
 
 import { ThemedText } from "@/components/ThemedText";
 import { Pill } from "@/components/Pill";
+import { SaveButton } from "@/components/SaveButton";
 import { useTheme } from "@/hooks/useTheme";
 import { Colors, Spacing, BorderRadius } from "@/constants/theme";
 import { Opportunity } from "@shared/schema";
@@ -61,14 +62,17 @@ export function OpportunityCard({
     >
       <View style={styles.header}>
         <Pill label={opportunity.category} variant="category" />
-        <View style={styles.deadline}>
-          <Feather name="calendar" size={14} color={colors.textSecondary} />
-          <ThemedText
-            type="caption"
-            style={[styles.deadlineText, { color: colors.textSecondary }]}
-          >
-            {opportunity.deadline}
-          </ThemedText>
+        <View style={styles.headerRight}>
+          <View style={styles.deadline}>
+            <Feather name="calendar" size={14} color={colors.textSecondary} />
+            <ThemedText
+              type="caption"
+              style={[styles.deadlineText, { color: colors.textSecondary }]}
+            >
+              {opportunity.deadline}
+            </ThemedText>
+          </View>
+          <SaveButton item={{ kind: "opportunity", id: opportunity.id }} size={20} />
         </View>
       </View>
 
@@ -115,6 +119,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: Spacing.md,
+  },
+  headerRight: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
   },
   deadline: {
     flexDirection: "row",

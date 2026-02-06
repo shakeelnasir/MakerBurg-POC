@@ -10,6 +10,7 @@ import Animated, {
 
 import { ThemedText } from "@/components/ThemedText";
 import { Pill } from "@/components/Pill";
+import { SaveButton } from "@/components/SaveButton";
 import { useTheme } from "@/hooks/useTheme";
 import { Colors, Spacing, BorderRadius } from "@/constants/theme";
 import { Video } from "@shared/schema";
@@ -66,9 +67,12 @@ export function VideoCard({ video, onPress }: VideoCardProps) {
         </View>
       </View>
       <View style={styles.content}>
-        <View style={styles.pills}>
-          <Pill label={video.region} />
-          <Pill label={video.craft} style={{ marginLeft: Spacing.sm }} />
+        <View style={styles.contentTopRow}>
+          <View style={styles.pills}>
+            <Pill label={video.region} />
+            <Pill label={video.craft} style={{ marginLeft: Spacing.sm }} />
+          </View>
+          <SaveButton item={{ kind: "video", id: video.id }} size={20} />
         </View>
         <ThemedText type="h4" numberOfLines={2}>
           {video.title}
@@ -137,9 +141,15 @@ const styles = StyleSheet.create({
   content: {
     padding: Spacing.lg,
   },
+  contentTopRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    marginBottom: Spacing.sm,
+  },
   pills: {
     flexDirection: "row",
-    marginBottom: Spacing.md,
+    flex: 1,
   },
   description: {
     marginTop: Spacing.sm,
